@@ -1,0 +1,1 @@
+export { PatientEpic } from './patient';

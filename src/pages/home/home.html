@@ -1,14 +1,65 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
+	<ion-navbar>
+		<ion-title>
+			Patient-Tracker
+		</ion-title>
+	</ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+	<div style="text-align : center" *ngIf="isMainPage">
+		<h2>Plaease Add A Patient</h2>
+		<hr>
+
+		<button ion-button color="primary" round (click)="add()">Add Patient</button>
+	</div>
+
+	<div *ngIf="isPatientForm">
+		<button (click)="back()" color="light" ion-button icon-left>
+					<ion-icon color="primary" name="md-arrow-back"></ion-icon>
+		 </button>
+
+
+		 	<form style="margin-top: 50px;" [formGroup]="patientForm">
+			<ion-list class="ion-list">
+				<ion-item class="patient-name">
+
+					<ion-label id="label">
+						<ion-icon name="md-person-add"></ion-icon>
+					</ion-label>
+
+					<ion-input  color="danger" placeholder="Patient Name" formControlName="patientName" type="text" ></ion-input>
+				</ion-item>
+				<ion-item class="patient-age">
+				<ion-label id="label">
+					<ion-icon name="md-person"></ion-icon>
+			    </ion-label>
+					<ion-input type="number" formControlName="patientAge"  placeholder="Patient Age"></ion-input>
+				</ion-item>
+
+
+				<ion-item class="patient-address">
+						<ion-label id="label">
+						   <ion-icon  name="md-home"></ion-icon>
+						</ion-label>
+					<ion-input type="text" placeholder="Patient Home Address" formControlName="patientAddress" ></ion-input>
+
+				</ion-item>
+
+
+				<ion-item class="patient-gender">
+					<ion-label id="label">
+						<ion-icon  name="ios-man"></ion-icon>Gender</ion-label>
+					<ion-select formControlName="gender">
+						<ion-option *ngFor="let gender of genders" [value]="gender.value">
+							{{gender.viewValue}}
+						</ion-option>
+					</ion-select>
+				</ion-item>
+				<div class="div-button" >
+					 <button ion-button class="patient-button" [disabled] = "!this.patientForm.valid" (click)="addPatient()">Submit</button>
+				</div>
+			</ion-list>
+		</form>
+	</div>
 </ion-content>

@@ -11,7 +11,7 @@ var ejs = require('ejs')
 // import {} from '../server/src/pages/home/home'
 var port = 3000;
 
-mongoose.connect('mongodb://<dbuser>:<dbpassword>@ds125195.mlab.com:25195/patient-tracker',{ useMongoClient: true });
+mongoose.connect('mongodb://doctor:doctor123@ds125195.mlab.com:25195/patient-tracker',{ useMongoClient: true });
 mongoose.connection.on("connected",function(){
     console.log("moongose is connected")
 })
@@ -20,13 +20,13 @@ app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 
 
-app.use(express.static(path.join(__dirname,'../server/src/pages')));
+// app.use(express.static(path.join(__dirname,'../server/src/pages')));
 
-app.engine('html',require('ejs').renderFile);
-app.set('views',__dirname);
+// app.engine('html',require('ejs').renderFile);
+// app.set('views',__dirname);
 
 app.use('/',index);
-app.use('/api',router)
+app.use('/addPatient',router)
 
 app.listen(port,function(){
     console.log('app started on port !')
