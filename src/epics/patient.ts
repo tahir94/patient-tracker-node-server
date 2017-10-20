@@ -19,6 +19,7 @@ import 'rxjs/add/observable/fromPromise';
 @Injectable()
 
 export class PatientEpic {
+	patientArray = [];
 	constructor( private ngRedux: NgRedux<AppState>,public http: Http) {}
 
 	Patient = (actions$ : ActionsObservable<any>) => {
@@ -28,9 +29,11 @@ export class PatientEpic {
 			let headers = new Headers();
 			headers.append('Content-Type','application/json');
 
-			this.http.post('http://localhost:3000/addPatient',JSON.stringify(payload), {headers : headers})
+			this.http.post('http://localhost:3000/hospital/patient',JSON.stringify(payload), {headers : headers})
 			.subscribe(res => {
 				console.log(res.json());
+				this.patientArray.push(res.json())
+				console.log(this.patientArray);
 				
 			})
 			return Observable.of()
