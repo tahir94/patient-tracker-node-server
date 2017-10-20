@@ -25,8 +25,8 @@ app.use(bodyParser.json());
 // app.engine('html',require('ejs').renderFile);
 // app.set('views',__dirname);
 
-app.use('/',index);
-app.use('/addPatient',router)
+// app.use('/',index);
+app.use('/hospital',router)
 
 app.listen(port,function(){
     console.log('app started on port !')
