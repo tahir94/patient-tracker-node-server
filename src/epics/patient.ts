@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { ActionsObservable } from 'redux-observable';
 import { Http, Headers } from '@angular/http';
 
-import { NgRedux } from "ng2-redux";
+import { NgRedux,select } from "ng2-redux";
 import { AppState } from '../reducers/rootReducer';
 
-import { ADD_PATIENT } from "../actions/patient";
+import { ADD_PATIENT, ADD_PATIENT_SUCCESS, DELETE, DELETE_SUCCESS,GET_PATIENT,GET_PATIENT_SUCCESS } from "../actions/patient";
 
 // rxjs imports
 import { Observable } from 'rxjs/Observable';
@@ -20,23 +20,64 @@ import 'rxjs/add/observable/fromPromise';
 
 export class PatientEpic {
 	patientArray = [];
-	constructor( private ngRedux: NgRedux<AppState>,public http: Http) {}
+	@select((s : AppState)=> s.patient.patientData) patientData$ : Observable<Array<any>>;
+	constructor(private ngRedux: NgRedux<AppState>, public http: Http) { }
 
-	Patient = (actions$ : ActionsObservable<any>) => {
-		return actions$.ofType(ADD_PATIENT)
-		.switchMap(({payload})=>{
-			console.log(payload);
+	GetPatient = (actions$ : ActionsObservable<any>)=>{
+		return actions$.ofType(GET_PATIENT)
+		.switchMap(()=>{
 			let headers = new Headers();
-			headers.append('Content-Type','application/json');
+			headers.append('Content-Type', 'application/json');
 
-			this.http.post('http://localhost:3000/hospital/patient',JSON.stringify(payload), {headers : headers})
-			.subscribe(res => {
-				console.log(res.json());
-				this.patientArray.push(res.json())
-				console.log(this.patientArray);
-				
+			return this.http.get('http://localhost:3000/hospital/patients', { headers: headers })
+			.switchMap(res =>{
+				console.log('details res!',res.json());
+				// this.patientArray.push(res.json());
+				return Observable.of({type : GET_PATIENT_SUCCESS, payload : res.json()})
 			})
-			return Observable.of()
+
+			
 		})
+	}
+
+	Patient = (actions$: ActionsObservable<any>) => {
+		this.patientArray = [];
+		return actions$.ofType(ADD_PATIENT)
+			.switchMap(({ payload, navCtrl }) => {
+				console.log('epic log 1', payload);
+				let headers = new Headers();
+				headers.append('Content-Type', 'application/json');
+
+				return this.http.post('http://localhost:3000/hospital/patient', JSON.stringify(payload), { headers: headers })
+					.switchMap(res => {
+						console.log('epic log 2', res.json());
+						this.patientArray.push(res.json())
+						console.log('epic: patient Array', this.patientArray);
+						navCtrl();
+						return Observable.of({ type: ADD_PATIENT_SUCCESS })
+					})
+
+			})
+	}
+
+	Delete = (actions$: ActionsObservable<any>) => {
+		return actions$.ofType(DELETE)
+			.switchMap(({ payload, navCtrl }) => {
+				console.log('epic payload', payload._id);
+				return this.http.delete('http://localhost:3000/hospital/patient/' + payload._id)
+					.switchMap((res) => {
+						console.log('res');
+						console.log('delete res :', res);
+						if (res) {
+							navCtrl();
+							console.error(res)
+							return Observable.of({ type: DELETE_SUCCESS, payload: res.json() })
+
+						}
+
+					})
+
+
+			})
 	}
 }

@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { PatientEpic } from '../../epics/patient'
-import { NgRedux } from "ng2-redux";
+import { PatientListPage } from "../patient-list/patient-list";
+import { NgRedux,select } from "ng2-redux";
 import { AppState } from "../../reducers/rootReducer";
 import { ADD_PATIENT } from "../../actions/patient";
 
+import { Observable } from "rxjs";
 
 @Component({
   selector: 'page-home',
@@ -19,15 +21,25 @@ export class HomePage {
 		{ value: 'male', viewValue: 'Male' },
 		{ value: 'female', viewValue: 'Female' }
 	]
+
+	@select((s : AppState)=> s.patient.patientData) patientData$ : Observable<Array<any>>;
 	
   constructor(public navCtrl: NavController,private fb: FormBuilder,
              private ngredux : NgRedux<AppState>) {
+
+				console.log(this.ngredux.getState());
+				
 	  
 	this.patientForm = this.fb.group({
 		patientName: '',
 		patientAge: '',
 		patientAddress: '',
 		gender: ''
+	})
+
+	this.patientData$.subscribe((data)=>{
+		console.log('home log',data);
+		
 	})
   }
 
@@ -45,8 +57,12 @@ addPatient(){
 	console.log(this.patientForm.value);
 	this.ngredux.dispatch({
 		type : ADD_PATIENT,
-		payload : this.patientForm.value
+		payload : this.patientForm.value,
+		navCtrl :() => this.navCtrl.push(PatientListPage)
+
 	})
 }
+
+
 
 }

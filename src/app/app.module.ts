@@ -6,7 +6,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule } from '@angular/http';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-
+import { PatientListPage } from "../pages/patient-list/patient-list";
+import { PatientDetailsPage } from "../pages/patient-details/patient-details";
 
 // redux imports
 import { combineReducers } from 'redux'
@@ -18,7 +19,9 @@ import { PatientEpic } from '../epics';
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+	HomePage,
+	PatientListPage,
+	PatientDetailsPage
   ],
   imports: [
 	HttpModule,
@@ -29,7 +32,9 @@ import { PatientEpic } from '../epics';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+	HomePage,
+	PatientListPage,
+	PatientDetailsPage
   ],
   providers: [
 	
@@ -45,8 +50,8 @@ export class AppModule {
 
 		const middleware = [
 			createEpicMiddleware(this.patientEpic.Patient),
-			// createEpicMiddleware(this.patientEpic.saveDataLocally),
-			// createEpicMiddleware(this.patientEpic.deleteInd)
+			createEpicMiddleware(this.patientEpic.Delete),
+			createEpicMiddleware(this.patientEpic.GetPatient)
 		]
 
 		ngRedux.configureStore(RootReducer, INITIAL_STATE, middleware)
