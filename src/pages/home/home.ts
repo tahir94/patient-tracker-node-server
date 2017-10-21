@@ -5,7 +5,8 @@ import { PatientEpic } from '../../epics/patient'
 import { PatientListPage } from "../patient-list/patient-list";
 import { NgRedux,select } from "ng2-redux";
 import { AppState } from "../../reducers/rootReducer";
-import { ADD_PATIENT } from "../../actions/patient";
+import { ADD_PATIENT,GET_PATIENT } from "../../actions/patient";
+import {  PatientDetailsPage} from "../patient-details/patient-details";
 
 import { Observable } from "rxjs";
 
@@ -17,6 +18,8 @@ export class HomePage {
 	patientForm: FormGroup;
 	isMainPage  : boolean = true;
 	isPatientForm : boolean = false;
+	isPatientList : boolean = true;
+	patientData = [];
 	genders = [
 		{ value: 'male', viewValue: 'Male' },
 		{ value: 'female', viewValue: 'Female' }
@@ -26,10 +29,13 @@ export class HomePage {
 	
   constructor(public navCtrl: NavController,private fb: FormBuilder,
              private ngredux : NgRedux<AppState>) {
-
+				
 				console.log(this.ngredux.getState());
 				
-	  
+				this.ngredux.dispatch({
+					type : GET_PATIENT
+				   })
+				   
 	this.patientForm = this.fb.group({
 		patientName: '',
 		patientAge: '',
@@ -39,18 +45,20 @@ export class HomePage {
 
 	this.patientData$.subscribe((data)=>{
 		console.log('home log',data);
-		
+		this.patientData = data
 	})
   }
 
   add(){
 	this.isMainPage = false;
-    this.isPatientForm = true;  
+	this.isPatientForm = true;  
+	this.isPatientList = false;
 }
 
 back(){
 	this.isMainPage = true;
-    this.isPatientForm = false;  
+	this.isPatientForm = false;
+	this.isPatientList = true;  
 }
 
 addPatient(){
@@ -62,6 +70,17 @@ addPatient(){
 
 	})
 }
+
+itemTapped(item,index){
+	
+	console.log(item);
+	console.log(index);
+	this.navCtrl.push(PatientDetailsPage,{
+		item,
+		index
+	})
+	}
+	
 
 
 

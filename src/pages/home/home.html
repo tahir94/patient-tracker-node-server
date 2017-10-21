@@ -13,7 +13,14 @@
 
 		<button ion-button color="primary" round (click)="add()">Add Patient</button>
 	</div>
-
+	<div *ngIf="isPatientList">
+			<ion-list>
+					<!-- <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>  (click)="itemTapped($event, a, i)" -->
+					<button class="list-button" ion-item *ngFor="let a of patientData; let i = index" (click)="itemTapped(a,i)">
+						  {{a.patientName}}
+					</button>
+				</ion-list>
+	</div>
 	<div *ngIf="isPatientForm">
 		<button (click)="back()" color="light" ion-button icon-left>
 					<ion-icon color="primary" name="md-arrow-back"></ion-icon>
