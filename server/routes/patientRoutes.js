@@ -9,6 +9,8 @@ var Patient = mongoose.model('Patient', {
   gender: String
 })
 
+
+
 router.post('/patient', function (req, res) {
   console.log('posting patient !')
   Patient.create({

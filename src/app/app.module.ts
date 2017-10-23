@@ -8,6 +8,8 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { PatientListPage } from "../pages/patient-list/patient-list";
 import { PatientDetailsPage } from "../pages/patient-details/patient-details";
+import { SignupPage } from "../pages/signup/signup";
+import { LoginPage } from "../pages/login/login";
 
 // redux imports
 import { combineReducers } from 'redux'
@@ -15,13 +17,17 @@ import { NgRedux, NgReduxModule } from 'ng2-redux';
 import { RootReducer, AppState, INITIAL_STATE } from '../reducers/rootReducer';
 import { createEpicMiddleware } from 'redux-observable';
 import { PatientEpic } from '../epics';
+import { AuthEpic } from '../epics';
+
 
 @NgModule({
   declarations: [
     MyApp,
 	HomePage,
 	PatientListPage,
-	PatientDetailsPage
+	PatientDetailsPage,
+	LoginPage,
+	SignupPage
   ],
   imports: [
 	HttpModule,
@@ -34,11 +40,13 @@ import { PatientEpic } from '../epics';
     MyApp,
 	HomePage,
 	PatientListPage,
-	PatientDetailsPage
+	PatientDetailsPage,
+	LoginPage,
+	SignupPage
   ],
   providers: [
 	
-	PatientEpic,
+	PatientEpic,AuthEpic,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
@@ -46,12 +54,14 @@ import { PatientEpic } from '../epics';
 })
 export class AppModule {
 	constructor(ngRedux: NgRedux<AppState>,
-		private patientEpic: PatientEpic){
+		private patientEpic: PatientEpic,
+	  private authEpic : AuthEpic){
 
 		const middleware = [
 			createEpicMiddleware(this.patientEpic.Patient),
 			createEpicMiddleware(this.patientEpic.Delete),
-			createEpicMiddleware(this.patientEpic.GetPatient)
+			createEpicMiddleware(this.patientEpic.GetPatient),
+			createEpicMiddleware(this.authEpic.Signup)
 		]
 
 		ngRedux.configureStore(RootReducer, INITIAL_STATE, middleware)

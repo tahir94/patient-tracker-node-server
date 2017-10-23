@@ -1,0 +1,36 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            Patient-Tracker
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+
+<ion-content>
+    <form style="margin-top: 50px;" [formGroup]="loginForm">
+        <ion-list class="ion-list">
+            <ion-item class="patient-name">
+                <ion-label id="label">
+                    <ion-icon name="md-person-add"></ion-icon>
+                </ion-label>
+                <ion-input color="danger" placeholder="User Email" formControlName="userEmail" type="text"></ion-input>
+            </ion-item>
+
+            <ion-item class="patient-name">
+                    <ion-label id="label">
+                        <ion-icon name="md-person-add"></ion-icon>
+                    </ion-label>
+                    <ion-input color="danger" placeholder="password" formControlName="userPassword" type="text"></ion-input>
+                </ion-item>
+                <div class="div-button" >
+                        <button ion-button class="patient-button"  (click)="login()">LOGIN</button>
+                        <!-- [disabled] = "!this.loginForm.valid" -->
+                </div>
+        </ion-list>
+    </form>
+    <div style="text-align : center">
+<b>don't have account <a style="cursor: pointer" (click)="goToSignup()">Create Account</a></b>
+</div>
+</ion-content>

@@ -3,6 +3,7 @@ var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var router = require('./routes/patientRoutes');
+var authRouter = require('./routes/authRouter');
 var index = require('./routes/index');
 var path = require('path');
 var ejs = require('ejs')
@@ -32,7 +33,8 @@ app.use(function(req, res, next) {
 // app.set('views',__dirname);
 
 // app.use('/',index);
-app.use('/hospital',router)
+app.use('/hospital',router);
+app.use('/auth',authRouter)
 
 app.listen(port,function(){
     console.log('app started on port !')
