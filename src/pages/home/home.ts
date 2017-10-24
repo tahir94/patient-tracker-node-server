@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { Component,ViewChild } from '@angular/core';
+import { NavController,MenuController,Nav  } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { PatientEpic } from '../../epics/patient'
 import { PatientListPage } from "../patient-list/patient-list";
 import { NgRedux,select } from "ng2-redux";
 import { AppState } from "../../reducers/rootReducer";
-import { ADD_PATIENT,GET_PATIENT } from "../../actions/patient";
+import { ADD_PATIENT,GET_PATIENT,SET_DATA_LOCALLLY } from "../../actions/patient";
 import {  PatientDetailsPage} from "../patient-details/patient-details";
-
+import { LoginPage } from "../login/login";
 import { Observable } from "rxjs";
 
 @Component({
@@ -15,6 +15,9 @@ import { Observable } from "rxjs";
   templateUrl: 'home.html'
 })
 export class HomePage {
+
+	@ViewChild(Nav) nav: Nav;
+
 	patientForm: FormGroup;
 	isMainPage  : boolean = true;
 	isPatientForm : boolean = false;
@@ -24,12 +27,19 @@ export class HomePage {
 		{ value: 'male', viewValue: 'Male' },
 		{ value: 'female', viewValue: 'Female' }
 	]
+	pages: Array<{title: string, component: any}>
+	
 
 	@select((s : AppState)=> s.patient.patientData) patientData$ : Observable<Array<any>>;
 	@select((s : AppState) => s.auth.userData) userData$ : Observable<Object>;
-  constructor(public navCtrl: NavController,private fb: FormBuilder,
-             private ngredux : NgRedux<AppState>) {
-				
+  
+	constructor(public navCtrl: NavController,private fb: FormBuilder,
+			 private ngredux : NgRedux<AppState>,
+			 menu: MenuController) {
+				menu.enable(true);
+				this.pages = [
+					{ title: 'Logout', component:  LoginPage}
+				  ];
 				console.log(this.ngredux.getState());
 				
 				this.ngredux.dispatch({
@@ -37,7 +47,13 @@ export class HomePage {
 				   })
 	this.userData$.subscribe((data)=>{
 		console.log(data);
-		
+		if(data){
+			this.ngredux.dispatch({
+			 type : SET_DATA_LOCALLLY,
+			 payload : data,
+			//  navCtrl : () => this.navCtrl.push()
+			})
+		}
 	})			   
 				   
 	this.patientForm = this.fb.group({
@@ -84,6 +100,10 @@ itemTapped(item,index){
 		index
 	})
 	}
+
+	logout() {
+		this.navCtrl.push(LoginPage)
+	  }
 	
 
 

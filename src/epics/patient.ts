@@ -5,7 +5,9 @@ import { Http, Headers } from '@angular/http';
 import { NgRedux,select } from "ng2-redux";
 import { AppState } from '../reducers/rootReducer';
 
-import { ADD_PATIENT, ADD_PATIENT_SUCCESS, DELETE, DELETE_SUCCESS,GET_PATIENT,GET_PATIENT_SUCCESS } from "../actions/patient";
+import { ADD_PATIENT, ADD_PATIENT_SUCCESS, DELETE,
+	 DELETE_SUCCESS,GET_PATIENT,GET_PATIENT_SUCCESS,
+	SET_DATA_LOCALLLY,LOCAL_DATA_SUCCESS } from "../actions/patient";
 
 // rxjs imports
 import { Observable } from 'rxjs/Observable';
@@ -22,6 +24,17 @@ export class PatientEpic {
 	patientArray = [];
 	@select((s : AppState)=> s.patient.patientData) patientData$ : Observable<Array<any>>;
 	constructor(private ngRedux: NgRedux<AppState>, public http: Http) { }
+
+	SetDataLocally = (actions$ : ActionsObservable<any>)=>{
+		return actions$.ofType(SET_DATA_LOCALLLY)
+		.switchMap(({payload})=>{
+			console.log('local epic !',payload);
+			
+		localStorage.setItem('token',payload._id)	
+			return Observable.of()
+		})
+	}
+
 
 	GetPatient = (actions$ : ActionsObservable<any>)=>{
 		return actions$.ofType(GET_PATIENT)

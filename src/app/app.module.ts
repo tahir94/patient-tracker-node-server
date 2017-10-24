@@ -61,7 +61,9 @@ export class AppModule {
 			createEpicMiddleware(this.patientEpic.Patient),
 			createEpicMiddleware(this.patientEpic.Delete),
 			createEpicMiddleware(this.patientEpic.GetPatient),
-			createEpicMiddleware(this.authEpic.Signup)
+			createEpicMiddleware(this.authEpic.Signup),
+			createEpicMiddleware(this.authEpic.Login),
+			createEpicMiddleware(this.patientEpic.SetDataLocally),
 		]
 
 		ngRedux.configureStore(RootReducer, INITIAL_STATE, middleware)

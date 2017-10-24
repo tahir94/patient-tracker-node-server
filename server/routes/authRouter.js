@@ -12,6 +12,26 @@ var userSchema = new mongoose.Schema({
 })
 var User = mongoose.model('User', userSchema)
 
+router.post('/login',function(req,res){
+
+  var userEmail = req.body.userEmail;
+  var userPassword = req.body.userPassword;
+  User.findOne({userEmail : userEmail, userPassword : userPassword},function(err,user){
+    if(err){
+      console.log('err',err)
+       res.status(500).send();
+    }
+    if(!user){
+      console.log('!user')
+       res.status(404).send('there is no user with this record');
+    }
+    else{
+      console.log('user',user)
+       res.status(200).send(user);
+   }
+  })
+})
+
 router.post('/signup', function (req, res, next) {
   var user = {
     userName: req.body.userName,

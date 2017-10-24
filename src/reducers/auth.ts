@@ -1,5 +1,5 @@
 import { tassign } from 'tassign';
-import { SIGNUP_SUCCESS } from "../actions/auth";
+import { SIGNUP_SUCCESS,LOGIN_SUCCESS } from "../actions/auth";
 export interface AuthState {
 userData : Object;
 }
@@ -14,6 +14,10 @@ export const AuthReducer = (state: AuthState = AUTH_INITIAL_STATE, action) => {
 switch(action.type){
 
     case SIGNUP_SUCCESS:
+    console.log(action.payload);
+    return tassign({userData : action.payload});
+
+    case LOGIN_SUCCESS :
     console.log(action.payload);
     return tassign({userData : action.payload})
 
