@@ -6,7 +6,8 @@ var router = require('./routes/patientRoutes');
 var authRouter = require('./routes/authRouter');
 var index = require('./routes/index');
 var path = require('path');
-var ejs = require('ejs')
+var ejs = require('ejs');
+
 // import  { router } from './routes/patientRoutes'
 // configuration
 // import {} from '../server/src/pages/home/home'
@@ -19,6 +20,7 @@ mongoose.connection.on("connected",function(){
 
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
+
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");

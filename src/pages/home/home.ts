@@ -26,7 +26,7 @@ export class HomePage {
 	]
 
 	@select((s : AppState)=> s.patient.patientData) patientData$ : Observable<Array<any>>;
-	
+	@select((s : AppState) => s.auth.userData) userData$ : Observable<Object>;
   constructor(public navCtrl: NavController,private fb: FormBuilder,
              private ngredux : NgRedux<AppState>) {
 				
@@ -35,6 +35,10 @@ export class HomePage {
 				this.ngredux.dispatch({
 					type : GET_PATIENT
 				   })
+	this.userData$.subscribe((data)=>{
+		console.log(data);
+		
+	})			   
 				   
 	this.patientForm = this.fb.group({
 		patientName: '',

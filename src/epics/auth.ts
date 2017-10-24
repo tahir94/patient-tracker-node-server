@@ -22,16 +22,26 @@ export class AuthEpic {
 
     Signup = (actions$ : ActionsObservable<any>)=>{
         return actions$.ofType(SIGNUP)
-        .switchMap(({payload})=>{
+        .switchMap(({payload,navCtrl})=>{
             console.log('epic payload',payload);
             let headers = new Headers();
             headers.append('Content-Type', 'application/json');
 
-            this.http.post('http://localhost:3000/auth/signup', payload, {headers: headers})
-            .subscribe(res => {
-              console.log('auth res in epic !',res);
+           return this.http.post('http://localhost:3000/auth/signup', payload, {headers: headers})
+            .switchMap(res => {
+				if(res.status == 303){
+					console.log('303');
+					console.log('auth res in epic !',res.json());					
+			  }
+			  else {
+				  console.log(res.json());
+				  
+				navCtrl()
+				return Observable.of({type : SIGNUP_SUCCESS, payload : res.json()})
+			  }
+			  
             });
-return Observable.of()
+
 
             // return Observable.of({type : SIGNUP_SUCCESS , payload : payload});
         })

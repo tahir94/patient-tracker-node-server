@@ -6,7 +6,8 @@ import { AppState } from "../../reducers/rootReducer";
 import { Http,Headers } from "@angular/http";
 import { Observable } from "rxjs";
 import { SIGNUP } from "../../actions/auth";
-
+import { HomePage } from "../home/home";
+import { EmailValidator } from '../../validators/email';
 
 @Component({
     selector: 'page-signup',
@@ -16,18 +17,23 @@ import { SIGNUP } from "../../actions/auth";
     signupForm : FormGroup;
 
     constructor(private fb : FormBuilder,
-               private ngRedux : NgRedux<AppState>){
+			   private ngRedux : NgRedux<AppState>,
+			   private navCtrl : NavController){
       this.signupForm = this.fb.group({
         userName : '',
-        userEmail : '',
-        userPassword :''
+        // userEmail : [null, Validators.pattern("^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$")],
+		userEmail : ['', Validators.compose([Validators.required, EmailValidator.isValid])],
+		userPassword :[null, Validators.compose([Validators.minLength(6), Validators.required])]
       })
     }
 
     signup(){
       this.ngRedux.dispatch({
         type : SIGNUP,
-        payload : this.signupForm.value
+		payload : this.signupForm.value,
+		navCtrl : ()=> this.navCtrl.push(HomePage),
+		// signupPage : () => this.navCtrl.push(SignupPage)
+		// signUpPage
       })
       
       
