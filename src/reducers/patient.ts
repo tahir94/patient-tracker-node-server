@@ -17,12 +17,12 @@ export const PatientReducer = (state: PatientState = PATIENT_INITIAL_STATE, acti
 	switch (action.type) {
 
 		case ADD_PATIENT_SUCCESS:
-			console.log(action.payload);
+			(action.payload);
 
 			// return tassign({ patientData: action.payload });
 
 		case GET_PATIENT_SUCCESS : 
-		console.log(action.payload);
+		(action.payload);
 		
 		return tassign({patientData : action.payload})
 

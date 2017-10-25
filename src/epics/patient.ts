@@ -29,7 +29,7 @@ export class PatientEpic {
 	SetDataLocally = (actions$ : ActionsObservable<any>)=>{
 		return actions$.ofType(SET_DATA_LOCALLLY)
 		.switchMap(({payload})=>{
-			console.log('local epic !',payload);
+			
 		localStorage.setItem('token',payload._id)	
 			return Observable.of()
 		})
@@ -38,15 +38,20 @@ export class PatientEpic {
 
 	GetPatient = (actions$ : ActionsObservable<any>)=>{
 		return actions$.ofType(GET_PATIENT)
-		.switchMap(()=>{
+		.switchMap(({navCtrl})=>{
+			if(navCtrl){
+				navCtrl();
+			}
+			
 			let headers = new Headers();
 			headers.append('Content-Type', 'application/json');
 			let currentUserId = localStorage.getItem('token');
-			console.log(currentUserId);
+			(currentUserId);
 			
 			return this.http.get('http://localhost:3000/hospital/patients/'+ currentUserId, { headers: headers })
+			
 			.switchMap(res =>{
-				console.log('details res!',res.json());
+				
 				// this.patientArray.push(res.json());
 				return Observable.of({type : GET_PATIENT_SUCCESS, payload : res.json()})
 			})			
@@ -57,23 +62,27 @@ export class PatientEpic {
 		this.patientArray = [];
 		return actions$.ofType(ADD_PATIENT)
 			.switchMap(({ payload, navCtrl }) => {
-				console.log('epic log 1', payload);
-				// console.log('current uid',this.currentUserUid);
+				
+				// ('current uid',this.currentUserUid);
 				
 				let headers = new Headers();
 				headers.append('Content-Type', 'application/json');
 				this.currentUserId  =  localStorage.getItem('token')
 				payload.id = this.currentUserId
 
-				console.log(payload);
+			
 				
 				return this.http.post('http://localhost:3000/hospital/patient', JSON.stringify(payload), { headers: headers })
 					.switchMap(res => {
-						console.log('epic log 2', res.json());
+						
 						
 						this.patientArray.push(res.json())
-						console.log('epic: patient Array', this.patientArray);
+						
+						
 						navCtrl();
+						this.ngRedux.dispatch({
+							type : GET_PATIENT
+						})
 						return Observable.of({ type: ADD_PATIENT_SUCCESS})
 					})
 			})
@@ -82,11 +91,11 @@ export class PatientEpic {
 	Delete = (actions$: ActionsObservable<any>) => {
 		return actions$.ofType(DELETE)
 			.switchMap(({ payload, navCtrl }) => {
-				console.log('epic payload', payload._id);
+				
 				return this.http.delete('http://localhost:3000/hospital/patient/' + payload._id)
 					.switchMap((res) => {
-						console.log('res');
-						console.log('delete res :', res);
+					
+						
 						if (res) {
 							navCtrl();
 							console.error(res)

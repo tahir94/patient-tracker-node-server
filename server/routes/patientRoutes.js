@@ -13,7 +13,7 @@ var Patient = mongoose.model('Patient', {
 
 
 router.post('/patient', function (req, res) {
-  console.log('posting patient !',req.body)
+  ('posting patient !',req.body)
   Patient.create({
     patientName: req.body.patientName,
     patientAge: req.body.patientAge,
@@ -24,13 +24,13 @@ router.post('/patient', function (req, res) {
     if (err) {
       res.send(err)
     }
-    console.log('patient responce !!', patient)
+    ('patient responce !!', patient)
     res.json(patient)
   })
 })
 
 router.get('/patient/:id', function (req, res) {
-  console.log('getting patient !')
+  ('getting patient !')
   Patient.create({
     patientName: req.body.patientName,
     patientAge: req.body.patientAge,
@@ -40,35 +40,35 @@ router.get('/patient/:id', function (req, res) {
     if (err) {
       res.send(err)
     }
-    console.log('patient responce !!')
+    ('patient responce !!')
     res.json(patient)
   })
 })
 router.get('/patients/:id', function (req, res) {
-	console.log('multiple patients !')
+	('multiple patients !')
 	Patient.find({id : req.params.id},function (err, patient) {
 	  if (err) {
 		res.send(err)
 	  }
-	  console.log('patient responce !!')
+	  ('patient responce !!')
 	  res.json(patient)    
 	})
 	 
   })
 // router.get('/patients/:currentUserId', function (req, res) {
-//   console.log('multiple patients !')
+//   ('multiple patients !')
 //   Patient.find({"id": currentUserId},function (err, patient) {
 //     if (err) {
 //       res.send(err)
 //     }
-//     console.log('patient responce !!')
+//     ('patient responce !!')
 //     res.json(patient)    
 //   })
    
 // })
 
 // router.put('/patient/:id', function (req, res) {
-// console.log('creating patient !')
+// ('creating patient !')
 // Patient.create({
 //   patientName: req.body.patientName,
 //   patientAge: req.body.patientAge,
@@ -78,7 +78,7 @@ router.get('/patients/:id', function (req, res) {
 //   if (err) {
 // 	res.send(err)
 //   }
-//   console.log('patient responce !!')
+//   ('patient responce !!')
 //   res.json(patient)
 // })
 // })
@@ -88,15 +88,15 @@ router.delete('/patient/:id', function (req, res) {
     _id: req.params.id
   }, function (err, patient) {
     if (err) {
-      console.log('err', err)
+      ('err', err)
     }
-    console.log('success', patient)
+    ('success', patient)
     res.send({id : req.params.id});
   })
 })
 
 // router.delete('/patient/:id', function (req, res) {
-// console.log('getting patient !')
+// ('getting patient !')
 // Patient.create({
 //   patientName: req.body.patientName,
 //   patientAge: req.body.patientAge,
@@ -106,7 +106,7 @@ router.delete('/patient/:id', function (req, res) {
 //   if (err) {
 // 	res.send(err)
 //   }
-//   console.log('patient responce !!')
+//   ('patient responce !!')
 //   res.json(patient)
 // })
 // })

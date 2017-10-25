@@ -28,18 +28,18 @@ export class PatientListPage {
 				})
 				
 
-				console.log(this.ngredux.getState());	
+				(this.ngredux.getState());	
 				
 				this.patientData$.subscribe((data)=>{
-					console.log('home log',data);
+					
 					this.patientData = data
 				})
 			 }
 
 itemTapped(item,index){
 
-console.log(item);
-console.log(index);
+(item);
+(index);
 this.navCtrl.push(PatientDetailsPage,{
 	item,
 	index

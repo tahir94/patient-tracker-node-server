@@ -25,13 +25,13 @@ export class PatientDetailsPage {
              private ngredux : NgRedux<AppState>) {
 
 			
-				console.log(this.ngredux.getState());	
+				(this.ngredux.getState());	
 				this.selectedItem = navParams.get('item');
 				this.selectedIndex = navParams.get('ndex')			
 			 }
 
 deletePatient(deletePatient){
-	console.log(deletePatient);
+	(deletePatient);
 	this.ngredux.dispatch({
 		type : DELETE,
 		payload : deletePatient,

@@ -14,11 +14,11 @@ export const AuthReducer = (state: AuthState = AUTH_INITIAL_STATE, action) => {
 switch(action.type){
 
     case SIGNUP_SUCCESS:
-    console.log(action.payload);
+    (action.payload);
     return tassign({userData : action.payload});
 
     case LOGIN_SUCCESS :
-    console.log(action.payload);
+    (action.payload);
     return tassign({userData : action.payload})
 
     default:

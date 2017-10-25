@@ -21,7 +21,6 @@ import { EmailValidator } from '../../validators/email';
 			   private navCtrl : NavController){
       this.signupForm = this.fb.group({
         userName : '',
-        // userEmail : [null, Validators.pattern("^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$")],
 		userEmail : ['', Validators.compose([Validators.required, EmailValidator.isValid])],
 		userPassword :[null, Validators.compose([Validators.minLength(6), Validators.required])]
       })
@@ -32,11 +31,8 @@ import { EmailValidator } from '../../validators/email';
         type : SIGNUP,
 		payload : this.signupForm.value,
 		navCtrl : ()=> this.navCtrl.push(HomePage),
-		// signupPage : () => this.navCtrl.push(SignupPage)
-		// signUpPage
       })
-      
-      
+      this.signupForm.reset();           
     }
   
   }

@@ -18,15 +18,15 @@ router.post('/login',function(req,res){
   var userPassword = req.body.userPassword;
   User.findOne({userEmail : userEmail, userPassword : userPassword},function(err,user){
     if(err){
-      console.log('err',err)
+      ('err',err)
        res.status(500).send();
     }
     if(!user){
-      console.log('!user')
+      ('!user')
        res.status(404).send('there is no user with this record');
     }
     else{
-      console.log('user',user)
+      ('user',user)
        res.status(200).send(user);
    }
   })
@@ -43,16 +43,16 @@ router.post('/signup', function (req, res, next) {
 
   newUser.save((err, success) => {
     if (err) {
-      console.log('something wrong')
+      ('something wrong')
       if (err.code == 11000) {
-		console.log('email already exist')
+		('email already exist')
 		res.status(303).send(err)
 		
       }else {
         res.send('something went wrong on server')
       }
     }else {
-      console.log('auth success res!', success)
+      ('auth success res!', success)
       res.status(200).send(success)
     }
   })

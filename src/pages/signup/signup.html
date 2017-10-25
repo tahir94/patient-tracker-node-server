@@ -34,17 +34,17 @@
 				<ion-label id="label">
 
 				</ion-label>
-				<ion-input color="danger" #userPassword placeholder="User Password" formControlName="userPassword" type="text" [class.invalid]="!signupForm.controls.userPassword.valid && signupForm.controls.userPassword.dirty"></ion-input>
+				<ion-input color="danger" #userPassword placeholder="User Password" formControlName="userPassword" type="password" [class.invalid]="!signupForm.controls.userPassword.valid && signupForm.controls.userPassword.dirty"></ion-input>
 			</ion-item>
 
-			<ion-item class="error-message" *ngIf="signupForm.controls.userPassword?.errors?.minlength  && signupForm.controls.userPassword.dirty">
+			<ion-item style="color : red" class="error-message" *ngIf="signupForm.controls.userPassword?.errors?.minlength  && signupForm.controls.userPassword.dirty">
 				<p>Your password needs more than 6 characters.</p>
 			</ion-item>
-			<ion-item class="error-message" *ngIf="signupForm.controls.userPassword?.errors?.required && signupForm.controls.userPassword.dirty">
+			<ion-item style="color : red" class="error-message" *ngIf="signupForm.controls.userPassword?.errors?.required && signupForm.controls.userPassword.dirty">
 				Password is required
 			</ion-item>
 			<div class="div-button">
-				<button ion-button style="background: #00838F" class="patient-button" (click)="signup()">SIGNUP</button>
+				<button ion-button style="background: #00838F" class="patient-button" [disabled] = "!this.signupForm.valid" (click)="signup()">SIGNUP</button>
 				<!-- [disabled] = "!this.loginForm.valid" -->
 			</div>
 		</ion-list>

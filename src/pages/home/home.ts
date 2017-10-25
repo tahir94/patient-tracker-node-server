@@ -31,7 +31,7 @@ export class HomePage {
   constructor(public navCtrl: NavController,private fb: FormBuilder,
              private ngredux : NgRedux<AppState>) {
 				
-				console.log(this.ngredux.getState());
+				(this.ngredux.getState());
 				
 				this.ngredux.dispatch({
 					type : GET_PATIENT
@@ -40,7 +40,7 @@ export class HomePage {
 				   
 				   
 	this.userData$.subscribe((data)=>{
-		console.log(data);
+		(data);
 		if(data){
 		
 			this.ngredux.dispatch({
@@ -59,7 +59,7 @@ export class HomePage {
 	})
 
 	this.patientData$.subscribe((data)=>{
-		console.log('home log',data);
+		
 		this.patientData = data
 	})
   }
@@ -77,9 +77,9 @@ back(){
 }
 
 addPatient(){
-	// console.log(this.currentUserData);
+	// (this.currentUserData);
 	
-	console.log(this.patientForm.value);
+	(this.patientForm.value);
 	this.ngredux.dispatch({
 		type : ADD_PATIENT,
 		payload : this.patientForm.value,
@@ -90,16 +90,17 @@ addPatient(){
 		}
 		
 	})
-	this.ngredux.dispatch({
-		type : GET_PATIENT
-	})
+	// this.ngredux.dispatch({
+	// 	type : GET_PATIENT,
+	// 	navCtrl : () => this.patientForm.reset()
+	// })
 	this.patientForm.reset();
 }
 
 itemTapped(item,index){
 	
-	console.log(item);
-	console.log(index);
+	(item);
+	(index);
 	this.navCtrl.push(PatientDetailsPage,{
 		item,
 		index

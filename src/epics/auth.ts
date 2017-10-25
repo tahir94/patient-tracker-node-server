@@ -24,18 +24,18 @@ export class AuthEpic {
     Signup = (actions$ : ActionsObservable<any>)=>{
         return actions$.ofType(SIGNUP)
         .switchMap(({payload,navCtrl})=>{
-            console.log('epic payload',payload);
+            
             let headers = new Headers();
             headers.append('Content-Type', 'application/json');
 
            return this.http.post('http://localhost:3000/auth/signup', payload, {headers: headers})
             .switchMap(res => {
 				if(res.status == 303){
-					console.log('303');
-					console.log('auth res in epic !',res.json());					
+					('303');
+									
 			  }
 			  else {
-				  console.log(res.json());
+				  (res.json());
 				  
 				navCtrl()
 				return Observable.of({type : SIGNUP_SUCCESS, payload : res.json()})
@@ -52,17 +52,17 @@ export class AuthEpic {
     Login = (actions$ : ActionsObservable<any>)=>{
         return actions$.ofType(LOGIN)
         .switchMap(({payload,navCtrl})=>{
-            console.log('login epic ! ', payload );
+         
             let headers = new Headers();
             headers.append('Content-Type', 'application/json');
             return this.http.post('http://localhost:3000/auth/login', payload, {headers: headers})
                 .switchMap(res =>{
-                    console.log('return res');
+                    ('return res');
                     
                     if(res.status == 404){
-                        console.log('res 2',res.json()._body);    
+                       
                     }
-                    console.log(res.json());
+                    (res.json());
                     navCtrl();
                     return Observable.of({type : LOGIN_SUCCESS,payload : res.json()})
                     
