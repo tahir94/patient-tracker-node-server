@@ -12,18 +12,16 @@
 		<ion-list class="ion-list">
 			<ion-item>
 				<ion-label id="label">
-
+					<ion-icon name="md-person"></ion-icon>
 				</ion-label>
 				<ion-input color="danger" placeholder="User Name" formControlName="userName" type="text"></ion-input>
 			</ion-item>
 
 			<ion-item class="patient-name">
 				<ion-label id="label">
-
+					<ion-icon name="md-mail"></ion-icon>
 				</ion-label>
 				<ion-input #userEmail color="danger" placeholder="User Email" formControlName="userEmail" type="email" [class.invalid]="!signupForm.controls.userEmail.valid && signupForm.controls.userEmail.dirty"></ion-input>
-
-				<!-- <div *ngIf="!signupForm.controls.email.valid && signupForm.controls.email.dirty">This Field is required</div> -->
 			</ion-item>
 			<ion-item class="error-message" *ngIf="!signupForm.controls.userEmail.valid  && signupForm.controls.userEmail.dirty">
 				<p style="color : red">Please enter a valid email.</p>
@@ -32,20 +30,19 @@
 
 			<ion-item class="patient-name">
 				<ion-label id="label">
-
+					<ion-icon name="md-lock"></ion-icon>
 				</ion-label>
 				<ion-input color="danger" #userPassword placeholder="User Password" formControlName="userPassword" type="password" [class.invalid]="!signupForm.controls.userPassword.valid && signupForm.controls.userPassword.dirty"></ion-input>
 			</ion-item>
 
-			<ion-item style="color : red" class="error-message" *ngIf="signupForm.controls.userPassword?.errors?.minlength  && signupForm.controls.userPassword.dirty">
-				<p>Your password needs more than 6 characters.</p>
+			<ion-item class="error-message" *ngIf="signupForm.controls.userPassword?.errors?.minlength  && signupForm.controls.userPassword.dirty">
+				<p style="color : red">Your password needs more than 6 characters.</p>
 			</ion-item>
 			<ion-item style="color : red" class="error-message" *ngIf="signupForm.controls.userPassword?.errors?.required && signupForm.controls.userPassword.dirty">
 				Password is required
 			</ion-item>
 			<div class="div-button">
-				<button ion-button style="background: #00838F" class="patient-button" [disabled] = "!this.signupForm.valid" (click)="signup()">SIGNUP</button>
-				<!-- [disabled] = "!this.loginForm.valid" -->
+				<button ion-button style="background: #00838F" class="patient-button" [disabled]="!this.signupForm.valid" (click)="signup()">SIGNUP</button>
 			</div>
 		</ion-list>
 	</form>

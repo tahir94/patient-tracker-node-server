@@ -46,13 +46,10 @@ export class PatientEpic {
 			let headers = new Headers();
 			headers.append('Content-Type', 'application/json');
 			let currentUserId = localStorage.getItem('token');
-			(currentUserId);
 			
 			return this.http.get('http://localhost:3000/hospital/patients/'+ currentUserId, { headers: headers })
 			
 			.switchMap(res =>{
-				
-				// this.patientArray.push(res.json());
 				return Observable.of({type : GET_PATIENT_SUCCESS, payload : res.json()})
 			})			
 		})
@@ -62,23 +59,14 @@ export class PatientEpic {
 		this.patientArray = [];
 		return actions$.ofType(ADD_PATIENT)
 			.switchMap(({ payload, navCtrl }) => {
-				
-				// ('current uid',this.currentUserUid);
-				
 				let headers = new Headers();
 				headers.append('Content-Type', 'application/json');
 				this.currentUserId  =  localStorage.getItem('token')
 				payload.id = this.currentUserId
-
-			
-				
+		
 				return this.http.post('http://localhost:3000/hospital/patient', JSON.stringify(payload), { headers: headers })
-					.switchMap(res => {
-						
-						
-						this.patientArray.push(res.json())
-						
-						
+					.switchMap(res => {						
+						this.patientArray.push(res.json())												
 						navCtrl();
 						this.ngRedux.dispatch({
 							type : GET_PATIENT
@@ -93,14 +81,11 @@ export class PatientEpic {
 			.switchMap(({ payload, navCtrl }) => {
 				
 				return this.http.delete('http://localhost:3000/hospital/patient/' + payload._id)
-					.switchMap((res) => {
-					
-						
+					.switchMap((res) => {										
 						if (res) {
 							navCtrl();
-							console.error(res)
+							// console.error(res)
 							return Observable.of({ type: DELETE_SUCCESS, payload: res.json() })
-
 						}
 					})
 			})

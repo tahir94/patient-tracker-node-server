@@ -3,32 +3,33 @@ var router = express.Router()
 var mongoose = require('mongoose')
 
 mongoose.Promise = global.Promise
+
 // Schema
 var userSchema = new mongoose.Schema({
-  userName: {type: String},
-  userEmail: {type: String  },
-  userPassword: {type: String},
-// user_id : {type : String}
+  userName: { type: String },
+  userEmail: { type: String },
+  userPassword: { type: String },
 })
+
+// model
 var User = mongoose.model('User', userSchema)
 
-router.post('/login',function(req,res){
+router.post('/login', function (req, res) {
 
   var userEmail = req.body.userEmail;
   var userPassword = req.body.userPassword;
-  User.findOne({userEmail : userEmail, userPassword : userPassword},function(err,user){
-    if(err){
-      ('err',err)
-       res.status(500).send();
+  User.findOne({ userEmail: userEmail, userPassword: userPassword }, function (err, user) {
+    if (err) {
+      console.log(err)
+      res.status(500).send();
     }
-    if(!user){
-      ('!user')
-       res.status(404).send('there is no user with this record');
+    if (!user) {
+      res.status(404).send('there is no user with this record');
     }
-    else{
-      ('user',user)
-       res.status(200).send(user);
-   }
+    else {
+      console.log(user)
+      res.status(200).send(user);
+    }
   })
 })
 
@@ -43,23 +44,20 @@ router.post('/signup', function (req, res, next) {
 
   newUser.save((err, success) => {
     if (err) {
-      ('something wrong')
+      console.log(err)
       if (err.code == 11000) {
-		('email already exist')
-		res.status(303).send(err)
-		
-      }else {
+
+        res.status(303).send(err)
+
+      } else {
         res.send('something went wrong on server')
       }
-    }else {
-      ('auth success res!', success)
+    } else {
+      console.log(success)
       res.status(200).send(success)
     }
   })
 })
 
-// router.get('/signup',function(req,res,next){
-
-// })
 
 module.exports = router

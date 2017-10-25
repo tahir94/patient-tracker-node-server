@@ -30,21 +30,15 @@ export class AuthEpic {
 
            return this.http.post('http://localhost:3000/auth/signup', payload, {headers: headers})
             .switchMap(res => {
-				if(res.status == 303){
-					('303');
-									
+				if(res.status == 303){									
 			  }
 			  else {
-				  (res.json());
 				  
 				navCtrl()
 				return Observable.of({type : SIGNUP_SUCCESS, payload : res.json()})
 			  }
 			  
             });
-
-
-            // return Observable.of({type : SIGNUP_SUCCESS , payload : payload});
         })
     }
 
@@ -57,15 +51,11 @@ export class AuthEpic {
             headers.append('Content-Type', 'application/json');
             return this.http.post('http://localhost:3000/auth/login', payload, {headers: headers})
                 .switchMap(res =>{
-                    ('return res');
                     
-                    if(res.status == 404){
-                       
+                    if(res.status == 404){               
                     }
-                    (res.json());
                     navCtrl();
-                    return Observable.of({type : LOGIN_SUCCESS,payload : res.json()})
-                    
+                    return Observable.of({type : LOGIN_SUCCESS,payload : res.json()})                    
                 })
         })
 	}

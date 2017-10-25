@@ -1,8 +1,8 @@
 <ion-header>
-	<ion-navbar  hideBackButton="true">
-			<button style="display : inline !important" ion-button menuToggle>
+	<ion-navbar hideBackButton="true">
+		<button class="menu-button" ion-button menuToggle>
 					<ion-icon name="menu"></ion-icon>
-		    </button>
+		</button>
 		<ion-title>
 			Patient-Tracker
 		</ion-title>
@@ -10,82 +10,82 @@
 </ion-header>
 
 <ion-menu [content]="content">
-		<ion-header>
-		  <ion-toolbar>
+	<ion-header>
+		<ion-toolbar>
 			<ion-title>Menu</ion-title>
-		  </ion-toolbar>
-		</ion-header>
-		<ion-content>
-		  <ion-list>
-			
-			 <button style="background : #0097A7;color : white;font-size : 18px" ion-item (click)="logout()">
+		</ion-toolbar>
+	</ion-header>
+	<ion-content>
+		<ion-list>
+
+			<button class="logout-button" ion-item (click)="logout()">
 			  Logout
 			</button>
-		  </ion-list>
-		</ion-content>
-	  </ion-menu>
-	  
-	  <ion-nav id="nav" #content [root]="rootPage"></ion-nav>
+		</ion-list>
+	</ion-content>
+</ion-menu>
+
+<ion-nav id="nav" #content [root]="rootPage"></ion-nav>
 
 <ion-content class="demo" padding>
-	
-	<div style="text-align : center" *ngIf="isMainPage">
-		<h2 style="color :#96C1DD;">Plaease Add A Patient</h2>
+
+	<div class="div_h2" *ngIf="isMainPage">
+		<h2 class="h2">Plaease Add A Patient</h2>
 		<hr>
 
 		<button ion-button color="primary" round (click)="add()">Add Patient</button>
 	</div>
 	<div *ngIf="isPatientList">
-			<ion-list>
-					<!-- <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>  (click)="itemTapped($event, a, i)" -->
-					<button style="color :#1B8BD7;font-size: 1.3em" class="list-button" ion-item *ngFor="let a of patientData; let i = index" (click)="itemTapped(a,i)">
+		<ion-list>
+			<button style="color :#1B8BD7;font-size: 1.3em" class="list-button" ion-item *ngFor="let a of patientData; let i = index"
+			 (click)="itemTapped(a,i)">
 						  {{a.patientName}}
-					</button>
-				</ion-list>
+			</button>
+		</ion-list>
 	</div>
 	<div *ngIf="isPatientForm">
-		<div class="icon-button" (click)="back()"  color="light">
-			<ion-icon  name="md-arrow-back"></ion-icon>
+		<div class="icon-button" (click)="back()" color="light">
+			<ion-icon name="md-arrow-back"></ion-icon>
 		</div>
 
 
-		 	<form style="margin-top: 50px;" [formGroup]="patientForm">
+		<form class="patient-form" [formGroup]="patientForm">
 			<ion-list class="ion-list">
 				<ion-item class="patient-age">
 					<ion-label id="label">
 						<ion-icon name="md-person"></ion-icon>
 					</ion-label>
-						<ion-input type="text" formControlName="patientName"  placeholder="Patient Name"></ion-input>
-					</ion-item>
+					<ion-input type="text" formControlName="patientName" placeholder="Patient Name"></ion-input>
+				</ion-item>
 
 				<ion-item class="patient-age">
-				<ion-label id="label">
-					<ion-icon name="md-person"></ion-icon>
-			    </ion-label>
-					<ion-input type="number" formControlName="patientAge"  placeholder="Patient Age"></ion-input>
+					<ion-label id="label">
+						<ion-icon name="md-person"></ion-icon>
+					</ion-label>
+					<ion-input type="number" formControlName="patientAge" placeholder="Patient Age"></ion-input>
 				</ion-item>
 
 
 				<ion-item class="patient-address">
-						<ion-label id="label">
-						   <ion-icon  name="md-home"></ion-icon>
-						</ion-label>
-					<ion-input type="text" placeholder="Patient Home Address" formControlName="patientAddress" ></ion-input>
+					<ion-label id="label">
+						<ion-icon name="md-home"></ion-icon>
+					</ion-label>
+					<ion-input type="text" placeholder="Patient Home Address" formControlName="patientAddress"></ion-input>
 
 				</ion-item>
 
 
 				<ion-item class="patient-gender">
 					<ion-label id="label">
-						<ion-icon  name="ios-man"></ion-icon>Gender</ion-label>
+						<ion-icon name="ios-man"></ion-icon>Gender</ion-label>
 					<ion-select formControlName="gender">
 						<ion-option *ngFor="let gender of genders" [value]="gender.value">
 							{{gender.viewValue}}
 						</ion-option>
 					</ion-select>
 				</ion-item>
-				<div class="div-button" >
-					 <button style="background: #00838F" ion-button class="patient-button" [disabled] = "!this.patientForm.valid" (click)="addPatient()">Submit</button>
+				<div class="div-button">
+					<button class="submit-button" ion-button class="patient-button" [disabled]="!this.patientForm.valid" (click)="addPatient()">Submit</button>
 				</div>
 			</ion-list>
 		</form>

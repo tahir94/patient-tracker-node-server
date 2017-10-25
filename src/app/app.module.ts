@@ -6,7 +6,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule } from '@angular/http';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { PatientListPage } from "../pages/patient-list/patient-list";
 import { PatientDetailsPage } from "../pages/patient-details/patient-details";
 import { SignupPage } from "../pages/signup/signup";
 import { LoginPage } from "../pages/login/login";
@@ -24,7 +23,6 @@ import { AuthEpic } from '../epics';
   declarations: [
     MyApp,
 	HomePage,
-	PatientListPage,
 	PatientDetailsPage,
 	LoginPage,
 	SignupPage
@@ -39,7 +37,6 @@ import { AuthEpic } from '../epics';
   entryComponents: [
     MyApp,
 	HomePage,
-	PatientListPage,
 	PatientDetailsPage,
 	LoginPage,
 	SignupPage
