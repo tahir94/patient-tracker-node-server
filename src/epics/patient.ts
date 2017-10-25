@@ -22,6 +22,7 @@ import 'rxjs/add/observable/fromPromise';
 
 export class PatientEpic {
 	patientArray = [];
+	currentUserId : String;
 	@select((s : AppState)=> s.patient.patientData) patientData$ : Observable<Array<any>>;
 	constructor(private ngRedux: NgRedux<AppState>, public http: Http) { }
 
@@ -29,7 +30,6 @@ export class PatientEpic {
 		return actions$.ofType(SET_DATA_LOCALLLY)
 		.switchMap(({payload})=>{
 			console.log('local epic !',payload);
-			
 		localStorage.setItem('token',payload._id)	
 			return Observable.of()
 		})
@@ -41,15 +41,15 @@ export class PatientEpic {
 		.switchMap(()=>{
 			let headers = new Headers();
 			headers.append('Content-Type', 'application/json');
-
-			return this.http.get('http://localhost:3000/hospital/patients', { headers: headers })
+			let currentUserId = localStorage.getItem('token');
+			console.log(currentUserId);
+			
+			return this.http.get('http://localhost:3000/hospital/patients/'+ currentUserId, { headers: headers })
 			.switchMap(res =>{
 				console.log('details res!',res.json());
 				// this.patientArray.push(res.json());
 				return Observable.of({type : GET_PATIENT_SUCCESS, payload : res.json()})
-			})
-
-			
+			})			
 		})
 	}
 
@@ -58,18 +58,24 @@ export class PatientEpic {
 		return actions$.ofType(ADD_PATIENT)
 			.switchMap(({ payload, navCtrl }) => {
 				console.log('epic log 1', payload);
+				// console.log('current uid',this.currentUserUid);
+				
 				let headers = new Headers();
 				headers.append('Content-Type', 'application/json');
+				this.currentUserId  =  localStorage.getItem('token')
+				payload.id = this.currentUserId
 
+				console.log(payload);
+				
 				return this.http.post('http://localhost:3000/hospital/patient', JSON.stringify(payload), { headers: headers })
 					.switchMap(res => {
 						console.log('epic log 2', res.json());
+						
 						this.patientArray.push(res.json())
 						console.log('epic: patient Array', this.patientArray);
 						navCtrl();
-						return Observable.of({ type: ADD_PATIENT_SUCCESS })
+						return Observable.of({ type: ADD_PATIENT_SUCCESS})
 					})
-
 			})
 	}
 
@@ -87,10 +93,7 @@ export class PatientEpic {
 							return Observable.of({ type: DELETE_SUCCESS, payload: res.json() })
 
 						}
-
 					})
-
-
 			})
 	}
 }

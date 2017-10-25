@@ -6,18 +6,20 @@ var Patient = mongoose.model('Patient', {
   patientName: String,
   patientAge: String,
   patientAddress: String,
-  gender: String
+  gender : String,
+  id    : String
 })
 
 
 
 router.post('/patient', function (req, res) {
-  console.log('posting patient !')
+  console.log('posting patient !',req.body)
   Patient.create({
     patientName: req.body.patientName,
     patientAge: req.body.patientAge,
     patientAddress: req.body.patientAddress,
-    gender: req.body.gender
+	gender: req.body.gender,
+	id : req.body.id
   }, function (err, patient) {
     if (err) {
       res.send(err)
@@ -42,18 +44,28 @@ router.get('/patient/:id', function (req, res) {
     res.json(patient)
   })
 })
-
-router.get('/patients', function (req, res) {
-  console.log('multiple patients !')
-  Patient.find(function (err, patient) {
-    if (err) {
-      res.send(err)
-    }
-    console.log('patient responce !!')
-    res.json(patient)
+router.get('/patients/:id', function (req, res) {
+	console.log('multiple patients !')
+	Patient.find({id : req.params.id},function (err, patient) {
+	  if (err) {
+		res.send(err)
+	  }
+	  console.log('patient responce !!')
+	  res.json(patient)    
+	})
+	 
   })
+// router.get('/patients/:currentUserId', function (req, res) {
+//   console.log('multiple patients !')
+//   Patient.find({"id": currentUserId},function (err, patient) {
+//     if (err) {
+//       res.send(err)
+//     }
+//     console.log('patient responce !!')
+//     res.json(patient)    
+//   })
    
-})
+// })
 
 // router.put('/patient/:id', function (req, res) {
 // console.log('creating patient !')

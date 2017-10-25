@@ -13,7 +13,7 @@ import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/fromPromise';
-import { LOGIN,LOGIN_SUCCESS } from "../actions/auth";
+import { LOGIN,LOGIN_SUCCESS,LOGOUT,LOGOUT_SUCCESS,GET_DATA_LOCALLY } from "../actions/auth";
 
 @Injectable()
 
@@ -68,5 +68,24 @@ export class AuthEpic {
                     
                 })
         })
-    }
+	}
+	
+	Logout = (actions$ : ActionsObservable<any>)=>{
+		return actions$.ofType(LOGOUT)
+		.switchMap(({navCtrl})=>{
+			localStorage.removeItem('token')
+			navCtrl();
+			return Observable.of()
+		})
+	}
+
+	GetDataLocal = (actions$ : ActionsObservable<any>)=>{
+		return actions$.ofType(GET_DATA_LOCALLY)
+		.switchMap(({navCtrl,HomeCtrl})=>{
+			if(localStorage.getItem('token')){
+				navCtrl();
+			}
+			return Observable.of()
+		})
+	}
 }

@@ -55,7 +55,7 @@ import { AuthEpic } from '../epics';
 export class AppModule {
 	constructor(ngRedux: NgRedux<AppState>,
 		private patientEpic: PatientEpic,
-	  private authEpic : AuthEpic){
+	    private authEpic : AuthEpic){
 
 		const middleware = [
 			createEpicMiddleware(this.patientEpic.Patient),
@@ -64,6 +64,8 @@ export class AppModule {
 			createEpicMiddleware(this.authEpic.Signup),
 			createEpicMiddleware(this.authEpic.Login),
 			createEpicMiddleware(this.patientEpic.SetDataLocally),
+			createEpicMiddleware(this.authEpic.Logout),
+			createEpicMiddleware(this.authEpic.GetDataLocal),
 		]
 
 		ngRedux.configureStore(RootReducer, INITIAL_STATE, middleware)

@@ -34,7 +34,7 @@
 	  
 	  <ion-nav id="nav" #content [root]="rootPage"></ion-nav>
 
-<ion-content padding>
+<ion-content class="demo" padding>
 	
 	<div style="text-align : center" *ngIf="isMainPage">
 		<h2>Plaease Add A Patient</h2>
@@ -51,14 +51,20 @@
 				</ion-list>
 	</div>
 	<div *ngIf="isPatientForm">
-		<button (click)="back()" color="light" ion-button icon-left>
-					<ion-icon color="primary" name="md-arrow-back"></ion-icon>
-		 </button>
+		<div class="icon-button" (click)="back()"  color="light">
+					<ion-icon  name="md-arrow-back"></ion-icon>
+		</div>
 
 
 		 	<form style="margin-top: 50px;" [formGroup]="patientForm">
 			<ion-list class="ion-list">
-				v
+				<ion-item class="patient-age">
+					<ion-label id="label">
+						<ion-icon name="md-person"></ion-icon>
+					</ion-label>
+						<ion-input type="text" formControlName="patientName"  placeholder="Patient Name"></ion-input>
+					</ion-item>
+
 				<ion-item class="patient-age">
 				<ion-label id="label">
 					<ion-icon name="md-person"></ion-icon>

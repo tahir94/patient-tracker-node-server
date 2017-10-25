@@ -1,5 +1,5 @@
-import { Component,ViewChild } from '@angular/core';
-import { NavController,MenuController,Nav  } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { PatientEpic } from '../../epics/patient'
 import { PatientListPage } from "../patient-list/patient-list";
@@ -8,6 +8,7 @@ import { AppState } from "../../reducers/rootReducer";
 import { ADD_PATIENT,GET_PATIENT,SET_DATA_LOCALLLY } from "../../actions/patient";
 import {  PatientDetailsPage} from "../patient-details/patient-details";
 import { LoginPage } from "../login/login";
+import { LOGOUT,GET_DATA_LOCALLY } from "../../actions/auth";
 import { Observable } from "rxjs";
 
 @Component({
@@ -15,9 +16,6 @@ import { Observable } from "rxjs";
   templateUrl: 'home.html'
 })
 export class HomePage {
-
-	@ViewChild(Nav) nav: Nav;
-
 	patientForm: FormGroup;
 	isMainPage  : boolean = true;
 	isPatientForm : boolean = false;
@@ -27,34 +25,31 @@ export class HomePage {
 		{ value: 'male', viewValue: 'Male' },
 		{ value: 'female', viewValue: 'Female' }
 	]
-	pages: Array<{title: string, component: any}>
-	
 
 	@select((s : AppState)=> s.patient.patientData) patientData$ : Observable<Array<any>>;
 	@select((s : AppState) => s.auth.userData) userData$ : Observable<Object>;
-  
-	constructor(public navCtrl: NavController,private fb: FormBuilder,
-			 private ngredux : NgRedux<AppState>,
-			 menu: MenuController) {
-				menu.enable(true);
-				this.pages = [
-					{ title: 'Logout', component:  LoginPage}
-				  ];
+  constructor(public navCtrl: NavController,private fb: FormBuilder,
+             private ngredux : NgRedux<AppState>) {
+				
 				console.log(this.ngredux.getState());
 				
 				this.ngredux.dispatch({
 					type : GET_PATIENT
 				   })
+				
+				   
+				   
 	this.userData$.subscribe((data)=>{
 		console.log(data);
 		if(data){
+		
 			this.ngredux.dispatch({
 			 type : SET_DATA_LOCALLLY,
 			 payload : data,
-			//  navCtrl : () => this.navCtrl.push()
-			})
-		}
-	})			   
+			})		
+	}
+})
+			   
 				   
 	this.patientForm = this.fb.group({
 		patientName: '',
@@ -82,12 +77,21 @@ back(){
 }
 
 addPatient(){
+	// console.log(this.currentUserData);
+	
 	console.log(this.patientForm.value);
 	this.ngredux.dispatch({
 		type : ADD_PATIENT,
 		payload : this.patientForm.value,
-		navCtrl :() => this.navCtrl.push(PatientListPage)
-
+		navCtrl :() => {
+			this.isMainPage = true;
+			this.isPatientList = true;
+			this.isPatientForm = false;
+		}
+		
+	})
+	this.ngredux.dispatch({
+		type : GET_PATIENT
 	})
 }
 
@@ -102,7 +106,12 @@ itemTapped(item,index){
 	}
 
 	logout() {
-		this.navCtrl.push(LoginPage)
+
+		this.ngredux.dispatch({
+			type : LOGOUT,
+			navCtrl : () => this.navCtrl.pop()
+		})
+		// this.navCtrl.push(LoginPage)
 	  }
 	
 

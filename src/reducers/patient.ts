@@ -22,6 +22,8 @@ export const PatientReducer = (state: PatientState = PATIENT_INITIAL_STATE, acti
 			// return tassign({ patientData: action.payload });
 
 		case GET_PATIENT_SUCCESS : 
+		console.log(action.payload);
+		
 		return tassign({patientData : action.payload})
 
 		case DELETE_SUCCESS:

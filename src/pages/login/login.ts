@@ -6,7 +6,7 @@ import { AppState } from "../../reducers/rootReducer";
 import { Http,Headers } from "@angular/http";
 import { Observable } from "rxjs";
 import { SignupPage } from "../signup/signup";
-import { LOGIN } from "../../actions/auth";
+import { LOGIN,GET_DATA_LOCALLY } from "../../actions/auth";
 import { HomePage } from "../home/home";
 
 @Component({
@@ -20,6 +20,13 @@ loginForm : FormGroup;
     constructor(private fb : FormBuilder,
                 private navCtrl: NavController,
                 private ngRedux : NgRedux<AppState>){
+					
+			this.ngRedux.dispatch({
+			type :  GET_DATA_LOCALLY,
+			navCtrl : ()=> this.navCtrl.push(HomePage)
+			
+		
+		})			
         this.loginForm  = this.fb.group({
             userEmail : '',
             userPassword : ''
