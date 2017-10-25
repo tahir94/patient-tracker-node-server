@@ -52,10 +52,10 @@ export class HomePage {
 			   
 				   
 	this.patientForm = this.fb.group({
-		patientName: '',
-		patientAge: '',
-		patientAddress: '',
-		gender: ''
+		patientName: [null,Validators.required],
+		patientAge: [null,Validators.required],
+		patientAddress: [null,Validators.required],
+		gender: [null,Validators.required]
 	})
 
 	this.patientData$.subscribe((data)=>{
@@ -93,6 +93,7 @@ addPatient(){
 	this.ngredux.dispatch({
 		type : GET_PATIENT
 	})
+	this.patientForm.reset();
 }
 
 itemTapped(item,index){

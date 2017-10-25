@@ -25,12 +25,12 @@
                     <ion-input color="danger" placeholder="password" formControlName="userPassword" type="text"></ion-input>
                 </ion-item>
                 <div class="div-button" >
-                        <button ion-button class="patient-button"  (click)="login()">LOGIN</button>
+                        <button ion-button style="background: #00838F" class="patient-button"  (click)="login()">LOGIN</button>
                         <!-- [disabled] = "!this.loginForm.valid" -->
                 </div>
         </ion-list>
     </form>
     <div style="text-align : center">
-<b>don't have account <a style="cursor: pointer" (click)="goToSignup()">Create Account</a></b>
-</div>
+      <b>don't have account <a style="cursor: pointer" (click)="goToSignup()">Create Account</a></b>
+    </div>
 </ion-content>

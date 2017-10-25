@@ -1,5 +1,5 @@
 <ion-header>
-	<ion-navbar hideBackButton="true">
+	<ion-navbar  hideBackButton="true">
 			<button style="display : inline !important" ion-button menuToggle>
 					<ion-icon name="menu"></ion-icon>
 		    </button>
@@ -18,16 +18,9 @@
 		<ion-content>
 		  <ion-list>
 			
-			 <button ion-item (click)="logout()">
+			 <button style="background : #0097A7;color : white;font-size : 18px" ion-item (click)="logout()">
 			  Logout
 			</button>
-
-			<!--<button ion-item (click)="openPage(eventsPage)">
-			  Events
-			</button>
-			<button ion-item (click)="closeMenu()">
-			  Close Menu
-			</button> -->
 		  </ion-list>
 		</ion-content>
 	  </ion-menu>
@@ -37,7 +30,7 @@
 <ion-content class="demo" padding>
 	
 	<div style="text-align : center" *ngIf="isMainPage">
-		<h2>Plaease Add A Patient</h2>
+		<h2 style="color :#96C1DD;">Plaease Add A Patient</h2>
 		<hr>
 
 		<button ion-button color="primary" round (click)="add()">Add Patient</button>
@@ -45,14 +38,14 @@
 	<div *ngIf="isPatientList">
 			<ion-list>
 					<!-- <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>  (click)="itemTapped($event, a, i)" -->
-					<button class="list-button" ion-item *ngFor="let a of patientData; let i = index" (click)="itemTapped(a,i)">
+					<button style="color :#1B8BD7;font-size: 1.3em" class="list-button" ion-item *ngFor="let a of patientData; let i = index" (click)="itemTapped(a,i)">
 						  {{a.patientName}}
 					</button>
 				</ion-list>
 	</div>
 	<div *ngIf="isPatientForm">
 		<div class="icon-button" (click)="back()"  color="light">
-					<ion-icon  name="md-arrow-back"></ion-icon>
+			<ion-icon  name="md-arrow-back"></ion-icon>
 		</div>
 
 
@@ -92,7 +85,7 @@
 					</ion-select>
 				</ion-item>
 				<div class="div-button" >
-					 <button ion-button class="patient-button" [disabled] = "!this.patientForm.valid" (click)="addPatient()">Submit</button>
+					 <button style="background: #00838F" ion-button class="patient-button" [disabled] = "!this.patientForm.valid" (click)="addPatient()">Submit</button>
 				</div>
 			</ion-list>
 		</form>

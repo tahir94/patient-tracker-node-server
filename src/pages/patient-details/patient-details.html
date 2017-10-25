@@ -8,19 +8,22 @@
 
 
 <ion-content padding>
-	<ion-list>
+	<ion-list style="color :#1B8BD7;font-size: 1.3em;">
 		Patient Name  <span style="float :right">{{selectedItem.patientName}}</span>
 	</ion-list>
-	<ion-list>
+	<hr>
+	<ion-list style="color :#1B8BD7;font-size: 1.3em;">
 		Patient Age  <span style="float :right">{{selectedItem.patientAge}}</span>
 	</ion-list>
-	<ion-list>
+	<hr>
+	<ion-list style="color :#1B8BD7;font-size: 1.3em;">
 		Patient Address <span style="float :right"> {{selectedItem.patientAddress}}</span>
 	</ion-list>
-	<ion-list>
+	<hr>
+	<ion-list style="color :#1B8BD7;font-size: 1.3em;">
 		Patient Gender  <span style="float :right">{{selectedItem.gender}}</span>
 	</ion-list>
-	<div style="text-align : center">
+	<div style="text-align : center;margin-top: 100px;">
 	<button ion-button class="patient-button"  (click)="deletePatient(selectedItem)">Delete</button>
     </div>
 </ion-content>
